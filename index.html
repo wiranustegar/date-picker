@@ -1,0 +1,1257 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kencan Kita</title>
+<meta name="description" content="Pilih tanggal, jam, aktivitas, dan tempat makan buat kencan kita.">
+<meta name="theme-color" content="#FF6F9C">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kencan Kita 💌">
+<meta property="og:description" content="Ada yang mau ngajak kamu kencan. Pilih tanggal, jam, mau ngapain, dan makan apa.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%92%8C</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+
+<style>
+  :root{
+    --ground:#FFF4EE;
+    --ground-2:#FFE9E0;
+    --card:#FFFFFF;
+    --card-2:#FFF9F5;
+    --ink:#4A2B3F;
+    --ink-soft:#8A6579;
+    --line:#F2D9CE;
+    --pink:#FF6F9C;
+    --pink-deep:#D14E77;
+    --mint:#54CBAE;
+    --mint-deep:#2FA88C;
+    --butter:#FFD166;
+    --butter-deep:#E0A92E;
+    --grape:#9B7BD8;
+    --shadow:rgba(209,78,119,.18);
+    --stripe:rgba(255,111,156,.10);
+    --r-lg:26px;
+    --r-md:18px;
+    --r-sm:12px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#2B1A26;
+      --ground-2:#361f2f;
+      --card:#3A2434;
+      --card-2:#432a3c;
+      --ink:#FFEAF1;
+      --ink-soft:#C9A3B6;
+      --line:#57384B;
+      --pink:#FF8FB4;
+      --pink-deep:#FF6F9C;
+      --mint:#6FDEC2;
+      --mint-deep:#54CBAE;
+      --butter:#FFD98A;
+      --butter-deep:#FFC94D;
+      --grape:#B79BEA;
+      --shadow:rgba(0,0,0,.42);
+      --stripe:rgba(255,143,180,.10);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#2B1A26;
+    --ground-2:#361f2f;
+    --card:#3A2434;
+    --card-2:#432a3c;
+    --ink:#FFEAF1;
+    --ink-soft:#C9A3B6;
+    --line:#57384B;
+    --pink:#FF8FB4;
+    --pink-deep:#FF6F9C;
+    --mint:#6FDEC2;
+    --mint-deep:#54CBAE;
+    --butter:#FFD98A;
+    --butter-deep:#FFC94D;
+    --grape:#B79BEA;
+    --shadow:rgba(0,0,0,.42);
+    --stripe:rgba(255,143,180,.10);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    background-image:
+      radial-gradient(circle at 12% 8%, var(--stripe) 0 22%, transparent 22.5%),
+      radial-gradient(circle at 88% 4%, var(--stripe) 0 16%, transparent 16.5%),
+      radial-gradient(circle at 92% 62%, var(--stripe) 0 18%, transparent 18.5%);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:"Nunito", ui-rounded, "Segoe UI", system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:"Baloo 2", "Baloo", ui-rounded, system-ui, sans-serif; line-height:1.15; text-wrap:balance; margin:0}
+  [hidden]{display:none !important}
+
+  .wrap{max-width:680px; margin:0 auto; padding:22px 16px 140px; display:flex; flex-direction:column; gap:20px}
+  .wrap.viewer{padding-bottom:60px}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:linear-gradient(160deg, var(--pink) 0%, #FF9AC0 55%, var(--butter) 155%);
+    border-radius:var(--r-lg);
+    padding:26px 22px 24px;
+    color:#43172B;
+    box-shadow:0 10px 0 var(--pink-deep), 0 18px 34px var(--shadow);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:auto -30px -70px auto; width:190px; height:190px;
+    border-radius:50%; background:rgba(255,255,255,.22);
+  }
+  .hero .eyebrow{
+    position:relative; z-index:1;
+    display:inline-block; background:rgba(255,255,255,.72); color:#8A2E52;
+    font-weight:700; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    padding:5px 12px; border-radius:99px;
+  }
+  .hero h1{position:relative; z-index:1; font-size:clamp(34px,9vw,50px); font-weight:800; margin:12px 0 6px; color:#4A1730}
+  .hero p{position:relative; z-index:1; margin:0; font-weight:600; color:#6B2141; max-width:34ch}
+
+  /* ---------- cards ---------- */
+  .card{
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:var(--r-lg);
+    padding:20px 18px;
+    box-shadow:0 6px 0 var(--line);
+  }
+  .card-head{display:flex; align-items:center; gap:11px; margin-bottom:14px}
+  .badge{
+    width:36px; height:36px; flex:none; border-radius:50%;
+    display:grid; place-items:center; font-size:18px;
+    background:var(--ground-2); border:2px solid var(--line);
+  }
+  .card-head h2{font-size:22px; font-weight:700}
+  .card-head .sub{display:block; font-family:"Nunito",sans-serif; font-size:12.5px; font-weight:600; color:var(--ink-soft); line-height:1.3}
+
+  /* ---------- calendar ---------- */
+  .cal-top{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px}
+  .cal-top .month{font-family:"Baloo 2",sans-serif; font-weight:700; font-size:18px}
+  .nav{
+    width:34px; height:34px; border-radius:50%; border:2px solid var(--line);
+    background:var(--card-2); color:var(--ink); font-size:16px; cursor:pointer; line-height:1;
+  }
+  .nav:hover:not(:disabled){background:var(--ground-2)}
+  .nav:disabled{opacity:.35; cursor:not-allowed}
+  .grid7{display:grid; grid-template-columns:repeat(7,1fr); gap:6px}
+  .dow{text-align:center; font-size:11px; font-weight:700; color:var(--ink-soft); letter-spacing:.06em; text-transform:uppercase; padding-bottom:4px}
+  .day{
+    aspect-ratio:1/1; border:none; border-radius:var(--r-sm);
+    background:var(--card-2); color:var(--ink);
+    font:inherit; font-weight:700; font-size:15px; font-variant-numeric:tabular-nums;
+    cursor:pointer; display:grid; place-items:center; position:relative;
+    transition:transform .12s ease, background .12s ease;
+  }
+  .day:hover:not(:disabled):not(.on){background:var(--ground-2); transform:translateY(-2px)}
+  .day.empty{background:transparent; cursor:default; pointer-events:none}
+  .day:disabled{color:var(--ink-soft); opacity:.35; cursor:not-allowed}
+  .day.today::after{content:""; position:absolute; bottom:6px; width:5px; height:5px; border-radius:50%; background:var(--mint-deep)}
+  .day.on{background:var(--pink); color:#fff; box-shadow:0 4px 0 var(--pink-deep); transform:translateY(-2px)}
+  .day.on.today::after{background:#fff}
+  .weekend:not(.on):not(:disabled){color:var(--pink-deep)}
+
+  /* ---------- chips ---------- */
+  .chips{display:flex; flex-wrap:wrap; gap:9px}
+  .chip{
+    font:inherit; font-weight:700; font-size:14px;
+    border:2px solid var(--line); background:var(--card-2); color:var(--ink);
+    border-radius:99px; padding:8px 15px; cursor:pointer;
+    transition:transform .12s ease, background .12s ease, border-color .12s ease;
+  }
+  .chip:hover{transform:translateY(-2px)}
+  .chip.on{background:var(--mint); border-color:var(--mint-deep); color:#0F3C33; box-shadow:0 4px 0 var(--mint-deep)}
+
+  /* ---------- custom input ---------- */
+  .chip.add,.opt.add{border-style:dashed; color:var(--ink-soft); background:transparent}
+  .chip.add:hover,.opt.add:hover{color:var(--pink-deep); border-color:var(--pink)}
+  .opt.add{justify-content:center}
+  .opt.add .ttl{color:var(--ink-soft)}
+  .opt.add:hover .ttl{color:var(--pink-deep)}
+  .chip.mine,.opt.mine{position:relative}
+  .custom-form{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:12px;
+    background:var(--card-2); border:2px dashed var(--pink); border-radius:var(--r-md); padding:12px}
+  .custom-form input{
+    flex:1 1 180px; min-width:0; font:inherit; font-weight:700; color:var(--ink);
+    background:var(--card); border:2px solid var(--line); border-radius:var(--r-sm); padding:9px 12px;
+  }
+  .custom-form input::placeholder{color:var(--ink-soft); opacity:.8; font-weight:600}
+  .custom-form .jelly{font-size:14.5px; padding:9px 16px; box-shadow:none}
+  .custom-form .jelly:hover{box-shadow:none; transform:translateY(-1px)}
+  .custom-form .jelly.drop{background:transparent; color:var(--pink-deep); border:2px solid var(--line)}
+
+  /* ---------- option cards ---------- */
+  .opts{display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px}
+  .opt{
+    font:inherit; text-align:left; cursor:pointer;
+    border:2px solid var(--line); background:var(--card-2); color:var(--ink);
+    border-radius:var(--r-md); padding:12px 12px 11px;
+    display:flex; flex-direction:column; gap:2px;
+    transition:transform .14s cubic-bezier(.34,1.56,.64,1), background .14s ease;
+  }
+  .opt .emo{font-size:22px; line-height:1}
+  .opt .ttl{font-family:"Baloo 2",sans-serif; font-weight:700; font-size:15.5px}
+  .opt .note{font-size:11.5px; font-weight:600; color:var(--ink-soft); line-height:1.35}
+  .opt:hover{transform:translateY(-3px) rotate(-1deg)}
+  .opt.on{background:var(--butter); border-color:var(--butter-deep); color:#4A3208; box-shadow:0 5px 0 var(--butter-deep)}
+  .opt.on .note{color:#7A5A12}
+
+  /* ---------- wheel ---------- */
+  .wheel-wrap{display:flex; flex-direction:column; align-items:center; gap:14px}
+  .wheel-stage{position:relative; width:min(280px,78vw); aspect-ratio:1/1}
+  .wheel-stage canvas{width:100%; height:100%; display:block; border-radius:50%;
+    box-shadow:0 8px 0 var(--line), 0 14px 26px var(--shadow)}
+  .pointer{
+    position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+    width:0; height:0; border-left:13px solid transparent; border-right:13px solid transparent;
+    border-top:24px solid var(--pink-deep); filter:drop-shadow(0 2px 0 rgba(0,0,0,.12)); z-index:2;
+  }
+  .hub{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:52px; height:52px; border-radius:50%; background:var(--card);
+    border:3px solid var(--line); display:grid; place-items:center; font-size:22px;
+  }
+  .verdict{
+    font-family:"Baloo 2",sans-serif; font-weight:700; font-size:17px;
+    text-align:center; min-height:26px; color:var(--pink-deep);
+  }
+
+  /* ---------- jelly buttons ---------- */
+  .jelly{
+    font-family:"Baloo 2",sans-serif; font-weight:700; font-size:17px; white-space:nowrap;
+    border:none; border-radius:99px; padding:13px 26px; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    background:var(--grape); color:#fff; box-shadow:0 6px 0 rgba(0,0,0,.22);
+    transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .jelly:hover{transform:translateY(-2px); box-shadow:0 8px 0 rgba(0,0,0,.22)}
+  .jelly:active{transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.22)}
+  .jelly.big{font-size:20px; padding:15px 34px}
+  .jelly.yes{background:var(--pink); box-shadow:0 6px 0 var(--pink-deep)}
+  .jelly.yes:hover{box-shadow:0 8px 0 var(--pink-deep)}
+  .jelly.yes:active{box-shadow:0 2px 0 var(--pink-deep)}
+  .jelly.no{background:var(--card-2); color:var(--ink-soft); border:2px solid var(--line); box-shadow:0 5px 0 var(--line)}
+  .jelly.soft{background:var(--card-2); color:var(--ink); border:2px solid var(--line); box-shadow:0 5px 0 var(--line)}
+  .jelly.wa{background:#25A35A; box-shadow:0 6px 0 #17773F}
+  .jelly.wa:hover{box-shadow:0 8px 0 #17773F}
+  .jelly.wa:active{box-shadow:0 2px 0 #17773F}
+  .jelly.grow{flex:1 1 auto}
+  :focus-visible{outline:3px solid var(--grape); outline-offset:3px}
+
+  /* ---------- ask ---------- */
+  .ask{
+    background:linear-gradient(170deg, var(--card) 0%, var(--card-2) 100%);
+    border:2px dashed var(--pink);
+    border-radius:var(--r-lg); padding:24px 18px; text-align:center;
+    box-shadow:0 6px 0 var(--line);
+  }
+  .ask h2{font-size:26px; margin-bottom:4px}
+  .ask p{margin:0 0 16px; color:var(--ink-soft); font-weight:600; font-size:14px}
+  .ask-buttons{position:relative; min-height:130px; display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap}
+  .runaway{position:relative; transition:transform .18s cubic-bezier(.34,1.56,.64,1)}
+  .jelly:disabled{cursor:default}
+  .jelly:disabled:hover{transform:none}
+  .jelly.faded{opacity:.35; filter:grayscale(.6)}
+  .jelly.chosen{opacity:1}
+  .ask-buttons.locked{min-height:0; padding:4px 0}
+  .answered{margin-top:4px; font-family:"Baloo 2",sans-serif; font-weight:700; font-size:16px; color:var(--mint-deep)}
+  .answered.sad{color:var(--ink-soft)}
+  .redo{
+    display:inline-flex; align-items:center; gap:6px; margin-top:10px;
+    font:inherit; font-weight:700; font-size:13.5px; cursor:pointer;
+    background:none; border:none; color:var(--ink-soft); text-decoration:underline;
+  }
+  .redo:hover{color:var(--pink-deep)}
+  .taunt{margin-top:10px; font-family:"Baloo 2",sans-serif; font-weight:600; color:var(--pink-deep); min-height:22px; font-size:15px}
+
+  /* ---------- share ---------- */
+  .share{border:2px dashed var(--mint-deep)}
+  .share .card-head h2{color:var(--mint-deep)}
+  .linkbox{display:flex; gap:8px; margin:4px 0 12px}
+  .linkbox input{
+    flex:1; min-width:0; font:inherit; font-size:13px; font-weight:600; color:var(--ink);
+    background:var(--card-2); border:2px solid var(--line); border-radius:var(--r-sm); padding:9px 11px;
+  }
+  .share .actions{display:flex; gap:10px; flex-wrap:wrap}
+  .share .actions .jelly{font-size:15.5px; padding:11px 20px}
+  .share .privacy{font-size:12.5px; color:var(--ink-soft); font-weight:600; margin:12px 0 0}
+  .share .warn{font-size:13px; font-weight:700; color:var(--pink-deep); margin:0 0 10px}
+
+  /* ---------- recap strip ---------- */
+  .recap{
+    position:fixed; left:0; right:0; bottom:0; z-index:40;
+    background:var(--card); border-top:2px solid var(--line);
+    box-shadow:0 -8px 24px var(--shadow);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  }
+  .recap-inner{max-width:680px; margin:0 auto; display:flex; align-items:center; gap:12px}
+  .recap .lines{flex:1; min-width:0}
+  .recap .l1{font-family:"Baloo 2",sans-serif; font-weight:700; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .recap .l2{font-size:12px; font-weight:600; color:var(--ink-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .recap .jelly{font-size:15px; padding:10px 18px; flex:none}
+
+  /* ---------- ticket ---------- */
+  .backdrop{
+    position:fixed; inset:0; z-index:60; background:rgba(45,16,32,.55);
+    display:grid; place-items:center; padding:18px; overflow:auto;
+    backdrop-filter:blur(3px);
+  }
+  .ticket{
+    width:100%; max-width:400px; background:var(--card);
+    border:2px solid var(--line); border-radius:var(--r-lg);
+    box-shadow:0 14px 0 var(--pink-deep), 0 26px 50px rgba(0,0,0,.35);
+    overflow:hidden; animation:pop .38s cubic-bezier(.34,1.56,.64,1);
+  }
+  .wrap .ticket{max-width:none; animation:none; box-shadow:0 10px 0 var(--pink-deep), 0 18px 34px var(--shadow)}
+  @keyframes pop{from{transform:scale(.86) translateY(14px); opacity:0}to{transform:none; opacity:1}}
+  .ticket-top{background:var(--pink); color:#4A1730; padding:18px; text-align:center}
+  .ticket-top .k{font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#7B2044}
+  .ticket-top h2{font-size:28px; font-weight:800; margin-top:2px}
+  .perf{height:14px; background:var(--pink);
+    -webkit-mask:radial-gradient(circle 8px at 8px 50%, transparent 98%, #000) repeat-x 0 0/16px 100%;
+    mask:radial-gradient(circle 8px at 8px 50%, transparent 98%, #000) repeat-x 0 0/16px 100%}
+  .ticket-body{padding:18px}
+  .row{display:flex; gap:12px; padding:10px 0; border-bottom:1px dashed var(--line)}
+  .row:last-of-type{border-bottom:none}
+  .row .k{font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); width:78px; flex:none; padding-top:3px}
+  .row .v{font-family:"Baloo 2",sans-serif; font-weight:700; font-size:16.5px; flex:1}
+  .stamp{
+    margin-top:14px; text-align:center; border:2px dashed var(--mint-deep); color:var(--mint-deep);
+    border-radius:var(--r-md); padding:9px; font-family:"Baloo 2",sans-serif; font-weight:700;
+    transform:rotate(-2deg); font-size:15px;
+  }
+  .ticket-foot{display:flex; gap:10px; padding:0 18px 18px; flex-wrap:wrap}
+  .ticket-foot .jelly{flex:1 1 130px; font-size:15px; padding:11px 14px}
+
+  /* ---------- reply ---------- */
+  .reply{border:2px solid var(--mint-deep); background:var(--card); text-align:center}
+  .reply h2{font-size:24px; color:var(--mint-deep)}
+  .reply p{margin:6px 0 16px; font-weight:600; color:var(--ink-soft); font-size:14px}
+  .reply .actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  .tweak{display:block; margin-top:14px; font-size:13.5px; font-weight:700; color:var(--ink-soft)}
+
+  /* ---------- link cards ---------- */
+  .wrapped-link{
+    display:flex; align-items:center; gap:14px; text-decoration:none;
+    background:#3B1F33; color:#FFF4EE; border-radius:var(--r-lg);
+    padding:18px 18px; box-shadow:0 6px 0 #1f0f1a;
+    transition:transform .14s cubic-bezier(.34,1.56,.64,1);
+  }
+  .wrapped-link:hover{transform:translateY(-3px) rotate(-.5deg)}
+  .wl-dots{position:relative; width:54px; height:54px; flex:none}
+  .wl-dots i{position:absolute; border-radius:50%}
+  .wl-dots i:nth-child(1){width:40px; height:40px; left:0; top:0; background:#FF6F9C}
+  .wl-dots i:nth-child(2){width:24px; height:24px; right:0; bottom:2px; background:#FFD166}
+  .wl-dots i:nth-child(3){width:14px; height:14px; left:6px; bottom:0; background:#54CBAE}
+  .wl-text{display:flex; flex-direction:column; flex:1; min-width:0}
+  .wl-k{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#FFD166}
+  .wl-t{font-family:"Baloo 2",sans-serif; font-weight:800; font-size:22px; line-height:1.15}
+  .wl-s{font-size:13.5px; font-weight:600; color:#F3D6E2}
+  .wl-go{font-family:"Baloo 2",sans-serif; font-weight:800; font-size:26px; color:#FFD166}
+
+  .wrapped-link.bday{background:#FFD166; color:#4A2B3F; box-shadow:0 6px 0 #C99526}
+  .wrapped-link.bday .wl-k{color:#A23D63}
+  .wrapped-link.bday .wl-s{color:#6B4A30}
+  .wrapped-link.bday .wl-go{color:#D14E77}
+  .wl-env{position:relative; width:54px; height:40px; flex:none; border-radius:6px; background:#FF6F9C; overflow:hidden; box-shadow:0 3px 0 #D14E77}
+  .wl-env i{position:absolute; inset:0; background:#FF8CB1; clip-path:polygon(0 0,100% 0,50% 72%)}
+
+  #confetti{position:fixed; inset:0; pointer-events:none; z-index:70}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+  .foot{text-align:center; font-size:12.5px; font-weight:600; color:var(--ink-soft)}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important; transition-duration:.01ms !important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PICKER ============ -->
+<div class="wrap" id="pickerView" hidden>
+
+  <header class="hero">
+    <span class="eyebrow">Undangan</span>
+    <h1>Kencan Kita</h1>
+    <p>Buat Riris Nur Azizah. Tinggal pilih tanggal, jam, mau ngapain, dan makan apa, terus kirim linknya. 💌</p>
+  </header>
+
+  <section class="card">
+    <div class="card-head">
+      <span class="badge">📅</span>
+      <div><h2>Kapan enaknya?</h2><span class="sub">Ketuk tanggal yang kamu mau</span></div>
+    </div>
+    <div class="cal-top">
+      <button class="nav" id="prevM" type="button" aria-label="Bulan sebelumnya">‹</button>
+      <span class="month" id="monthLabel">—</span>
+      <button class="nav" id="nextM" type="button" aria-label="Bulan berikutnya">›</button>
+    </div>
+    <div class="grid7" id="dowRow" aria-hidden="true"></div>
+    <div class="grid7" id="calGrid" role="group" aria-label="Pilih tanggal kencan"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <span class="badge">⏰</span>
+      <div><h2>Jam berapa?</h2><span class="sub">Nggak ada yang pas? Tulis sendiri di bawah</span></div>
+    </div>
+    <div class="chips" id="times"></div>
+    <div class="custom-form" id="timeForm" hidden>
+      <input id="timeInput" maxlength="32" placeholder="misal: 06.00 pagi banget" aria-label="Jam versimu sendiri">
+      <button class="jelly" id="timeOk" type="button">Pakai</button>
+      <button class="jelly soft" id="timeCancel" type="button">Batal</button>
+      <button class="jelly drop" id="timeDrop" type="button" hidden>Hapus</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <span class="badge">✨</span>
+      <div><h2>Mau ngapain?</h2><span class="sub">Pilih satu, tulis sendiri, atau serahin ke roda putar</span></div>
+    </div>
+    <div class="opts" id="acts"></div>
+    <div class="custom-form" id="actForm" hidden>
+      <input id="actInput" maxlength="32" placeholder="misal: Gak kemana-mana" aria-label="Aktivitas versimu sendiri">
+      <button class="jelly" id="actOk" type="button">Pakai</button>
+      <button class="jelly soft" id="actCancel" type="button">Batal</button>
+      <button class="jelly drop" id="actDrop" type="button" hidden>Hapus</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <span class="badge">🍽️</span>
+      <div><h2>Makan apa?</h2><span class="sub">Pertanyaan tersulit sepanjang hubungan kita</span></div>
+    </div>
+    <div class="opts" id="foods"></div>
+    <div class="custom-form" id="foodForm" hidden>
+      <input id="foodInput" maxlength="32" placeholder="misal: Masak bareng di rumah" aria-label="Tempat makan versimu sendiri">
+      <button class="jelly" id="foodOk" type="button">Pakai</button>
+      <button class="jelly soft" id="foodCancel" type="button">Batal</button>
+      <button class="jelly drop" id="foodDrop" type="button" hidden>Hapus</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <span class="badge">🎡</span>
+      <div><h2>Masih bingung?</h2><span class="sub">Putar rodanya, biar takdir yang milih</span></div>
+    </div>
+    <div class="wheel-wrap">
+      <div class="wheel-stage">
+        <div class="pointer"></div>
+        <canvas id="wheel" width="560" height="560" role="img" aria-label="Roda putar pilihan aktivitas"></canvas>
+        <div class="hub">🎯</div>
+      </div>
+      <button class="jelly" id="spin" type="button">Putar rodanya!</button>
+      <p class="verdict" id="verdict" role="status"></p>
+    </div>
+  </section>
+
+  <section class="card share" id="share">
+    <div class="card-head">
+      <span class="badge">🔗</span>
+      <div><h2>Kirim undangannya</h2><span class="sub">Dia klik link, langsung lihat undangan yang kamu set</span></div>
+    </div>
+    <p class="warn" id="shareWarn" hidden></p>
+    <div class="linkbox">
+      <input id="shareLink" readonly aria-label="Link undangan">
+      <button class="jelly soft" id="copyShare" type="button">Salin</button>
+    </div>
+    <div class="actions">
+      <a class="jelly wa grow" id="waShare" target="_blank" rel="noopener">Kirim via WhatsApp</a>
+    </div>
+    <p class="privacy">Pilihanmu tersimpan di dalam link itu sendiri, tidak dikirim ke server mana pun. Setiap kali kamu ganti pilihan, linknya ikut berubah — jadi salin lagi sebelum kirim.</p>
+  </section>
+
+  <!-- <a class="wrapped-link" href="wrapped.html">
+    <span class="wl-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="wl-text">
+      <span class="wl-k">Baru</span>
+      <span class="wl-t">Hubungan Wrapped</span>
+      <span class="wl-s">Rangkuman setahun kita, dibuka kayak story.</span>
+    </span>
+    <span class="wl-go" aria-hidden="true">→</span>
+  </a>
+
+  <a class="wrapped-link bday" href="ucapan.html">
+    <span class="wl-env" aria-hidden="true"><i></i></span>
+    <span class="wl-text">
+      <span class="wl-k">Buat ulang tahunnya</span>
+      <span class="wl-t">Kartu Ulang Tahun</span>
+      <span class="wl-s">Tulis ucapan, kirim link, dia buka amplopnya.</span>
+    </span>
+    <span class="wl-go" aria-hidden="true">→</span>
+  </a> -->
+
+  <p class="foot">Made from Love 🩷</p>
+</div>
+
+<!-- ============ VIEWER (undangan yang sudah diset) ============ -->
+<div class="wrap viewer" id="viewerView" hidden>
+  <header class="hero">
+    <span class="eyebrow">Undangan kencan</span>
+    <h1 id="vTitle">Hai!</h1>
+    <p id="vLead">Ada yang mau ngajak kamu keluar. Ini detailnya.</p>
+  </header>
+
+  <div id="vTicket"></div>
+
+  <section class="ask">
+    <h2>Jadi… mau kan? 🥺</h2>
+    <p>Tekan salah satu. Salah satunya agak susah ditekan.</p>
+    <div class="ask-buttons" id="vAskZone">
+      <button class="jelly yes big" id="vYes" type="button">Mau banget! 💕</button>
+      <button class="jelly no runaway" id="vNo" type="button">Nggak dulu</button>
+    </div>
+    <p class="taunt" id="vTaunt"></p>
+  </section>
+
+  <section class="card reply" id="vReply" hidden>
+    <h2 id="vReplyTitle">Jawabanmu: Mau banget 💕</h2>
+    <p id="vReplyNote">Tinggal kabarin Tegar, biar dia tenang.</p>
+    <div class="actions">
+      <a class="jelly wa" id="vWa" target="_blank" rel="noopener">Kirim jawaban via WhatsApp</a>
+    </div>
+    <a class="tweak" href="#" id="vTweak">Bisa, tapi aku mau ubah jadwalnya →</a>
+    <button class="redo" id="vRedo" type="button">Salah pencet? Set ulang jawabannya ↺</button>
+  </section>
+
+  <p class="foot">Dibuat khusus buat kamu 🌷</p>
+</div>
+
+<div class="recap" id="recap" hidden>
+  <div class="recap-inner">
+    <div class="lines">
+      <div class="l1" id="recapL1">Belum ada rencana…</div>
+      <div class="l2" id="recapL2">Pilih tanggal dulu yuk</div>
+    </div>
+    <button class="jelly yes" id="openInvite" type="button">Lihat undangan</button>
+  </div>
+</div>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- data ---------------- */
+  var DOW = ["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
+  var MONTHS = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+  var TIMES = [
+    "09.00 pagi","11.00 menjelang siang","13.00 siang",
+    "15.30 sore","17.30 golden hour","19.00 malam","20.30 malam banget"
+  ];
+
+  var ACTS = [
+    {e:"🎬", t:"Nonton", n:"Kamu pilih filmnya, aku beli tiketnya"},
+    {e:"☕", t:"Ngopi santai", n:"Ngobrol sampai gelas kedua"},
+    {e:"🛍️", t:"Muter mall", n:"Window shopping, beli satu doang"},
+    {e:"🎮", t:"Netflix & chill", n:"Nonton netflix bareng, cemilan, dan ngobrol"},
+    {e:"🏞️", t:"Jalan-jalan bareng Salmon", n:"Jalan di taman, cemilan, dan angin sore"}
+  ];
+
+  var FOODS = [
+    {e:"🍲", t:"Ramen", n:"Kesukaan kita yang paling aman"},
+    {e:"🍕", t:"Pizza", n:"Potongan terakhir buat kamu"},
+    {e:"🍣", t:"Sushi", n:"Tapi kamu gak suka sushi"},
+    {e:"🍲", t:"Bakso / Mie ayam", n:"Anget, aman, gak pernah salah"},
+    {e:"🥘", t:"Padang", n:"Ambil banyak, bayar seikhlasnya"},
+    {e:"🍗", t:"Yoshinoya", n:"Fast food yang gak ribet"},
+    {e:"🍗", t:"Labbaik", n:"Makanan favorit kamu aowkwk"}
+  ];
+
+  /* Nama pengirim & penerima — tetap, karena ini web punya Tegar sendiri.
+     Mau ganti? cukup ubah dua baris di bawah ini. */
+  var SENDER = "Tegar";
+  var RECIPIENT = "Riris";
+
+  var state = { date:null, time:null, act:null, food:null };
+
+  function $(id){ return document.getElementById(id); }
+  function startOfDay(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function sameDay(a,b){ return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+  function clean(s){ return (s||"").toString().trim(); }
+  function pad(n){ return (n<10?"0":"") + n; }
+  function ymd(d){ return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()); }
+  function parseYMD(s){
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(s||"")) return null;
+    var p = s.split("-").map(Number);
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return isNaN(d) ? null : d;
+  }
+  function fmtDate(d){
+    if(!d) return null;
+    return DOW[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear();
+  }
+  function emojiFor(list, title, fb){
+    for(var i=0;i<list.length;i++){ if(list[i].t === title) return list[i].e; }
+    return fb || "";
+  }
+  function isPreset(list, val){
+    if(!val) return true;
+    for(var i=0;i<list.length;i++){
+      var x = list[i];
+      if((typeof x === "string" ? x : x.t) === val) return true;
+    }
+    return false;
+  }
+  function announce(msg){ $("live").textContent = msg; }
+
+  /* ---------------- link encoding ---------------- */
+  function enc(o){
+    var b = new TextEncoder().encode(JSON.stringify(o)), s = "";
+    for(var i=0;i<b.length;i++) s += String.fromCharCode(b[i]);
+    return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  }
+  function dec(t){
+    t = t.replace(/-/g,"+").replace(/_/g,"/"); while(t.length % 4) t += "=";
+    var bin = atob(t), b = new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++) b[i] = bin.charCodeAt(i);
+    return JSON.parse(new TextDecoder().decode(b));
+  }
+  function baseUrl(){ return location.href.split("#")[0]; }
+
+  function payload(){
+    var p = {};
+    if(state.date) p.d = ymd(state.date);
+    if(state.time) p.t = state.time;
+    if(state.act) p.a = state.act;
+    if(state.food) p.m = state.food;
+    return p;
+  }
+  function fromPayload(p){
+    state.date = parseYMD(p.d);
+    state.time = p.t || null; state.act = p.a || null; state.food = p.m || null;
+  }
+
+  /* ---------------- calendar ---------------- */
+  var today = startOfDay(new Date());
+  var view = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  (function buildDow(){
+    var row = $("dowRow");
+    DOW.forEach(function(d){
+      var s = document.createElement("div");
+      s.className = "dow"; s.textContent = d;
+      row.appendChild(s);
+    });
+  })();
+
+  function renderCal(){
+    $("monthLabel").textContent = MONTHS[view.getMonth()] + " " + view.getFullYear();
+    $("prevM").disabled = (view.getFullYear() === today.getFullYear() && view.getMonth() === today.getMonth());
+
+    var grid = $("calGrid");
+    grid.textContent = "";
+    var first = new Date(view.getFullYear(), view.getMonth(), 1);
+    var lead = first.getDay();
+    var days = new Date(view.getFullYear(), view.getMonth()+1, 0).getDate();
+
+    for(var i=0;i<lead;i++){
+      var pd = document.createElement("div");
+      pd.className = "day empty";
+      grid.appendChild(pd);
+    }
+    for(var n=1;n<=days;n++){
+      var d = new Date(view.getFullYear(), view.getMonth(), n);
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "day";
+      b.textContent = n;
+      var dow = d.getDay();
+      if(dow===0 || dow===6) b.classList.add("weekend");
+      if(sameDay(d, today)) b.classList.add("today");
+      if(d < today) b.disabled = true;
+      if(sameDay(d, state.date)) b.classList.add("on");
+      b.setAttribute("aria-pressed", sameDay(d, state.date) ? "true" : "false");
+      b.setAttribute("aria-label", n + " " + MONTHS[view.getMonth()]);
+      (function(dd){
+        b.addEventListener("click", function(){
+          state.date = dd;
+          renderCal(); sync();
+          announce("Tanggal dipilih: " + fmtDate(dd));
+        });
+      })(d);
+      grid.appendChild(b);
+    }
+  }
+
+  $("prevM").addEventListener("click", function(){
+    view = new Date(view.getFullYear(), view.getMonth()-1, 1); renderCal();
+  });
+  $("nextM").addEventListener("click", function(){
+    view = new Date(view.getFullYear(), view.getMonth()+1, 1); renderCal();
+  });
+
+  /* ---------------- times ---------------- */
+  function renderTimes(){
+    var box = $("times");
+    box.textContent = "";
+    TIMES.forEach(function(t){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (state.time === t ? " on" : "");
+      b.textContent = t;
+      b.setAttribute("aria-pressed", state.time === t ? "true" : "false");
+      b.addEventListener("click", function(){
+        state.time = (state.time === t) ? null : t;
+        renderTimes(); sync();
+      });
+      box.appendChild(b);
+    });
+
+    if(!isPreset(TIMES, state.time)){
+      var mine = document.createElement("button");
+      mine.type = "button";
+      mine.className = "chip on mine";
+      mine.textContent = state.time + " ✏️";
+      mine.setAttribute("aria-pressed","true");
+      mine.addEventListener("click", function(){ openCustom("time"); });
+      box.appendChild(mine);
+    }
+
+    var add = document.createElement("button");
+    add.type = "button";
+    add.className = "chip add";
+    add.textContent = "＋ Tulis sendiri";
+    add.addEventListener("click", function(){ openCustom("time"); });
+    box.appendChild(add);
+  }
+
+  /* ---------------- option grids ---------------- */
+  function renderOpts(containerId, list, key){
+    var box = $(containerId);
+    box.textContent = "";
+    list.forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "opt" + (state[key] === o.t ? " on" : "");
+      b.setAttribute("aria-pressed", state[key] === o.t ? "true" : "false");
+      var e = document.createElement("span"); e.className = "emo"; e.textContent = o.e;
+      var t = document.createElement("span"); t.className = "ttl"; t.textContent = o.t;
+      var n = document.createElement("span"); n.className = "note"; n.textContent = o.n;
+      b.appendChild(e); b.appendChild(t); b.appendChild(n);
+      b.addEventListener("click", function(){
+        state[key] = (state[key] === o.t) ? null : o.t;
+        renderOpts(containerId, list, key); sync();
+      });
+      box.appendChild(b);
+    });
+
+    var fb = (key === "food") ? "🍽️" : "✨";
+    if(!isPreset(list, state[key])){
+      var mine = document.createElement("button");
+      mine.type = "button";
+      mine.className = "opt on mine";
+      mine.setAttribute("aria-pressed","true");
+      var me = document.createElement("span"); me.className = "emo"; me.textContent = fb;
+      var mt = document.createElement("span"); mt.className = "ttl"; mt.textContent = state[key];
+      var mn = document.createElement("span"); mn.className = "note"; mn.textContent = "Tulisanmu sendiri · ketuk buat ubah";
+      mine.appendChild(me); mine.appendChild(mt); mine.appendChild(mn);
+      mine.addEventListener("click", function(){ openCustom(key); });
+      box.appendChild(mine);
+    }
+
+    var add = document.createElement("button");
+    add.type = "button";
+    add.className = "opt add";
+    var ae = document.createElement("span"); ae.className = "emo"; ae.textContent = "✍️";
+    var at = document.createElement("span"); at.className = "ttl"; at.textContent = "Tulis sendiri";
+    var an = document.createElement("span"); an.className = "note"; an.textContent = "Punya ide lain? tulis di sini";
+    add.appendChild(ae); add.appendChild(at); add.appendChild(an);
+    add.addEventListener("click", function(){ openCustom(key); });
+    box.appendChild(add);
+  }
+
+  /* ---------------- custom values ---------------- */
+  var CUSTOM = {
+    time: {list:TIMES, rerender:function(){ renderTimes(); }},
+    act:  {list:ACTS,  rerender:function(){ renderOpts("acts", ACTS, "act"); }},
+    food: {list:FOODS, rerender:function(){ renderOpts("foods", FOODS, "food"); }}
+  };
+
+  function openCustom(key){
+    ["time","act","food"].forEach(function(k){ if(k !== key) closeCustom(k); });
+    var form = $(key + "Form"), input = $(key + "Input");
+    var custom = !isPreset(CUSTOM[key].list, state[key]);
+    form.hidden = false;
+    $(key + "Drop").hidden = !custom;
+    input.value = custom ? state[key] : "";
+    input.focus();
+    input.select();
+  }
+  function closeCustom(key){
+    var form = $(key + "Form");
+    if(form) form.hidden = true;
+  }
+  function applyCustom(key){
+    var v = clean($(key + "Input").value);
+    if(!v){ $(key + "Input").focus(); return; }
+    state[key] = v;
+    closeCustom(key);
+    CUSTOM[key].rerender();
+    sync();
+    announce("Pilihan sendiri dipakai: " + v);
+  }
+  function dropCustom(key){
+    state[key] = null;
+    closeCustom(key);
+    CUSTOM[key].rerender();
+    sync();
+  }
+  ["time","act","food"].forEach(function(key){
+    $(key + "Ok").addEventListener("click", function(){ applyCustom(key); });
+    $(key + "Cancel").addEventListener("click", function(){ closeCustom(key); });
+    $(key + "Drop").addEventListener("click", function(){ dropCustom(key); });
+    $(key + "Input").addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); applyCustom(key); }
+      else if(ev.key === "Escape"){ ev.preventDefault(); closeCustom(key); }
+    });
+  });
+
+  /* ---------------- recap + share link ---------------- */
+  function waText(link){
+    var lines = [
+      "Hai " + RECIPIENT + "!",
+      "Aku mau ngajak kencan 💌",
+      "🗓️ " + (fmtDate(state.date) || "tanggal menyusul"),
+      "⏰ " + (state.time || "jam menyusul"),
+      "✨ " + (state.act || "acara kejutan"),
+      "🍽️ " + (state.food || "makan di jalan aja"),
+      "Buka ini ya: " + link,
+      "— " + SENDER
+    ];
+    return lines.join("\n");
+  }
+
+  function sync(){
+    var l1 = $("recapL1"), l2 = $("recapL2");
+    if(!state.date && !state.time && !state.act && !state.food){
+      l1.textContent = "Belum ada rencana…";
+      l2.textContent = "Pilih tanggal dulu yuk";
+    }else{
+      l1.textContent = (fmtDate(state.date) || "Tanggal belum dipilih") + (state.time ? " · " + state.time.split(" ")[0] : "");
+      var bits = [];
+      if(state.act) bits.push(emojiFor(ACTS, state.act, "✨") + " " + state.act);
+      if(state.food) bits.push(emojiFor(FOODS, state.food, "🍽️") + " " + state.food);
+      l2.textContent = bits.length ? bits.join("  ·  ") : "Tinggal pilih aktivitas & makanannya";
+    }
+
+    var link = baseUrl() + "#u=" + enc(payload());
+    $("shareLink").value = link;
+    $("waShare").href = "https://wa.me/?text=" + encodeURIComponent(waText(link));
+    $("copyShare").textContent = "Salin";
+
+    var missing = [];
+    if(!state.date) missing.push("tanggal");
+    if(!state.time) missing.push("jam");
+    var warn = $("shareWarn");
+    if(missing.length){
+      warn.hidden = false;
+      warn.textContent = "Belum diisi: " + missing.join(", ") + ". Boleh dikirim, tapi di undangannya bagian itu bakal kosong.";
+    }else{
+      warn.hidden = true;
+    }
+  }
+
+  $("copyShare").addEventListener("click", function(){
+    var btn = this, v = $("shareLink").value;
+    function ok(){ btn.textContent = "Tersalin ✓"; setTimeout(function(){ btn.textContent = "Salin"; }, 1800); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(v).then(ok).catch(function(){ $("shareLink").select(); btn.textContent = "Ctrl+C"; });
+    }else{ $("shareLink").select(); btn.textContent = "Ctrl+C"; }
+  });
+
+  /* ---------------- ticket builder ---------------- */
+  function buildTicket(opts){
+    var t = document.createElement("div");
+    t.className = "ticket";
+
+    var top = document.createElement("div");
+    top.className = "ticket-top";
+    var k = document.createElement("div"); k.className = "k";
+    k.textContent = "Buat " + RECIPIENT + " · dari " + SENDER;
+    var h = document.createElement("h2"); h.textContent = "Tiket Kencan";
+    top.appendChild(k); top.appendChild(h);
+
+    var perf = document.createElement("div"); perf.className = "perf";
+
+    var body = document.createElement("div"); body.className = "ticket-body";
+    [
+      ["Tanggal", fmtDate(state.date) || "Masih rahasia 🤫"],
+      ["Jam", state.time || "Fleksibel, kamu yang tentuin"],
+      ["Agenda", state.act ? (emojiFor(ACTS, state.act, "✨") + " " + state.act) : "Pokoknya seru"],
+      ["Makan", state.food ? (emojiFor(FOODS, state.food, "🍽️") + " " + state.food) : "Cari di jalan aja"]
+    ].forEach(function(pair){
+      var r = document.createElement("div"); r.className = "row";
+      var kk = document.createElement("div"); kk.className = "k"; kk.textContent = pair[0];
+      var vv = document.createElement("div"); vv.className = "v"; vv.textContent = pair[1];
+      r.appendChild(kk); r.appendChild(vv); body.appendChild(r);
+    });
+    var st = document.createElement("div"); st.className = "stamp";
+    st.textContent = "Berlaku selamanya · Dijemput tepat waktu";
+    body.appendChild(st);
+
+    t.appendChild(top); t.appendChild(perf); t.appendChild(body);
+
+    if(opts && opts.foot){
+      var foot = document.createElement("div"); foot.className = "ticket-foot";
+      opts.foot.forEach(function(b){ foot.appendChild(b); });
+      t.appendChild(foot);
+    }
+    return t;
+  }
+
+  /* ---------------- modal ticket (sisi pembuat) ---------------- */
+  var sheet = null, lastFocus = null;
+
+  function openInvite(){
+    if(sheet) return;
+    lastFocus = document.activeElement;
+
+    var copy = document.createElement("button");
+    copy.className = "jelly soft"; copy.type = "button"; copy.textContent = "Salin link";
+    copy.addEventListener("click", function(){
+      var link = baseUrl() + "#u=" + enc(payload());
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(link).then(function(){
+          copy.textContent = "Tersalin ✓";
+          setTimeout(function(){ copy.textContent = "Salin link"; }, 1800);
+        }).catch(function(){ copy.textContent = "Gagal nyalin"; });
+      }else{ copy.textContent = "Gagal nyalin"; }
+    });
+
+    var wa = document.createElement("a");
+    wa.className = "jelly wa"; wa.target = "_blank"; wa.rel = "noopener"; wa.textContent = "Kirim WhatsApp";
+    var l = baseUrl() + "#u=" + enc(payload());
+    wa.href = "https://wa.me/?text=" + encodeURIComponent(waText(l));
+
+    var close = document.createElement("button");
+    close.className = "jelly yes"; close.type = "button"; close.textContent = "Tutup";
+    close.addEventListener("click", closeInvite);
+
+    sheet = document.createElement("div");
+    sheet.className = "backdrop";
+    sheet.setAttribute("role","dialog");
+    sheet.setAttribute("aria-modal","true");
+    sheet.setAttribute("aria-label","Kartu undangan kencan");
+    sheet.appendChild(buildTicket({foot:[copy, wa, close]}));
+    sheet.addEventListener("click", function(ev){ if(ev.target === sheet) closeInvite(); });
+    document.body.appendChild(sheet);
+    close.focus();
+    document.addEventListener("keydown", onEsc);
+    burst(70);
+  }
+  function onEsc(ev){ if(ev.key === "Escape") closeInvite(); }
+  function closeInvite(){
+    if(!sheet) return;
+    sheet.remove(); sheet = null;
+    document.removeEventListener("keydown", onEsc);
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  $("openInvite").addEventListener("click", openInvite);
+  /* ---------------- runaway "no" ---------------- */
+  var TAUNTS = [
+    "eh, mau kemana tombolnya? 👀",
+    "susah ya? 😌",
+    "coba lagi deh, siapa tau kena",
+    "tombolnya juga pengen kita jadian kencan",
+    "yaudah, ini aku diemin. tapi mikir lagi ya 🥹"
+  ];
+  function makeAsk(cfg){
+    var yes = $(cfg.yes), no = $(cfg.no), zone = $(cfg.zone), out = $(cfg.taunt);
+    var dodges = 0, locked = false;
+
+    function dodge(ev){
+      if(locked || dodges >= 5) return;
+      if(ev) ev.preventDefault();
+      var z = zone.getBoundingClientRect(), b = no.getBoundingClientRect();
+      var maxX = Math.max(0, z.width - b.width) / 2;
+      var maxY = Math.max(0, z.height - b.height) / 2;
+      var nx = (Math.random()*2 - 1) * maxX;
+      var ny = (Math.random()*2 - 1) * maxY;
+      no.style.transform = "translate(" + Math.round(nx) + "px," + Math.round(ny) + "px) rotate(" + Math.round((Math.random()*20)-10) + "deg)";
+      out.textContent = TAUNTS[Math.min(dodges, TAUNTS.length-1)];
+      out.className = "taunt";
+      dodges++;
+      if(dodges >= 5){ no.textContent = "Nggak (beneran?)"; no.style.transform = "none"; }
+    }
+
+    function answer(a){
+      if(locked) return;
+      locked = true;
+      yes.disabled = true; no.disabled = true;
+      no.style.transform = "none";
+      zone.classList.add("locked");
+      yes.classList.add(a === "yes" ? "chosen" : "faded");
+      no.classList.add(a === "no" ? "chosen" : "faded");
+      out.textContent = a === "yes" ? "Jawaban terkunci: Mau banget 💕" : "Jawaban terkunci: Nggak dulu 🥲";
+      out.className = "taunt answered" + (a === "no" ? " sad" : "");
+      if(cfg.redo) $(cfg.redo).hidden = false;
+      if(cfg.onAnswer) cfg.onAnswer(a);
+    }
+
+    function reset(){
+      var was = locked;
+      locked = false; dodges = 0;
+      yes.disabled = false; no.disabled = false;
+      yes.className = "jelly yes big"; no.className = "jelly no runaway";
+      no.style.transform = "none"; no.textContent = "Nggak dulu";
+      zone.classList.remove("locked");
+      out.textContent = ""; out.className = "taunt";
+      if(cfg.redo) $(cfg.redo).hidden = true;
+      if(cfg.onReset) cfg.onReset();
+      if(was) yes.focus();
+    }
+
+    no.addEventListener("mouseenter", dodge);
+    no.addEventListener("focus", dodge);
+    no.addEventListener("touchstart", dodge, {passive:false});
+    no.addEventListener("click", function(){
+      if(locked) return;
+      if(dodges >= 5) answer("no"); else dodge();
+    });
+    yes.addEventListener("click", function(){ answer("yes"); });
+    if(cfg.redo) $(cfg.redo).addEventListener("click", reset);
+
+    return {reset:reset, answer:answer};
+  }
+
+  var viewerAsk = makeAsk({
+    yes:"vYes", no:"vNo", zone:"vAskZone", taunt:"vTaunt", redo:"vRedo",
+    onAnswer: function(a){
+      var yes = (a === "yes");
+      $("vReplyTitle").textContent = yes ? "Jawabanmu: Mau banget 💕" : "Jawabanmu: Nggak dulu 🥲";
+      $("vReplyNote").textContent = yes
+        ? ("Tinggal kabarin " + SENDER + ", biar dia tenang.")
+        : ("Gapapa. Kabarin " + SENDER + " ya, biar dia nggak nunggu.");
+      $("vWa").href = "https://wa.me/?text=" + encodeURIComponent(replyText(yes));
+      $("vWa").textContent = yes ? "Kirim jawaban via WhatsApp" : "Kabarin lewat WhatsApp";
+      $("vTweak").textContent = yes ? "Bisa, tapi aku mau ubah jadwalnya →" : "Usul tanggal lain aja →";
+      $("vReply").hidden = false;
+      if(yes) burst(110);
+      $("vReply").scrollIntoView({behavior:"smooth", block:"center"});
+    },
+    onReset: function(){ $("vReply").hidden = true; }
+  });
+
+  function replyText(yes){
+    if(yes){
+      return [
+        "Mau banget! 💕",
+        "Jadi ya: " + (fmtDate(state.date) || "tanggalnya nanti dikabarin") + (state.time ? ", jam " + state.time : ""),
+        (state.act ? "✨ " + state.act : ""),
+        (state.food ? "🍽️ " + state.food : "")
+      ].filter(Boolean).join("\n");
+    }
+    return [
+      "Maaf ya, yang ini aku belum bisa 🥲",
+      "Tapi aku mau kok, cari tanggal lain yuk."
+    ].join("\n");
+  }
+
+  /* ---------------- viewer ---------------- */
+  function showViewer(){
+    $("pickerView").hidden = true;
+    $("recap").hidden = true;
+    $("viewerView").hidden = false;
+    $("vReply").hidden = true;
+
+    $("vTitle").textContent = "Hai " + RECIPIENT + "!";
+    $("vLead").textContent = SENDER + " mau ngajak kamu keluar. Ini detailnya.";
+
+    var box = $("vTicket");
+    box.textContent = "";
+    box.appendChild(buildTicket());
+
+    viewerAsk.reset();
+    window.scrollTo(0,0);
+  }
+
+  $("vTweak").addEventListener("click", function(ev){
+    ev.preventDefault();
+    history.replaceState(null, "", baseUrl());
+    showPicker();
+    announce("Sekarang kamu bisa ubah jadwalnya, lalu kirim balik linknya.");
+  });
+
+  function showPicker(){
+    $("viewerView").hidden = true;
+    $("pickerView").hidden = false;
+    $("recap").hidden = false;
+    if(state.date){
+      var d = state.date;
+      view = new Date(d.getFullYear(), d.getMonth(), 1);
+      if(view < new Date(today.getFullYear(), today.getMonth(), 1)) view = new Date(today.getFullYear(), today.getMonth(), 1);
+    }
+    ["time","act","food"].forEach(closeCustom);
+    renderCal(); renderTimes();
+    renderOpts("acts", ACTS, "act");
+    renderOpts("foods", FOODS, "food");
+    sync();
+    drawWheel();
+    window.scrollTo(0,0);
+  }
+
+  /* ---------------- wheel ---------------- */
+  var cv = $("wheel"), cx = cv.getContext("2d");
+  var slices = ACTS.map(function(a){ return a.e + " " + a.t; });
+  var sliceColors = ["#FF8FB4","#FFD166","#7ED8C3","#B79BEA","#FFA98F","#8FD0F5","#FFC2D8","#A8E6A1"];
+  var angle = 0, spinning = false;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function drawWheel(){
+    var S = cv.width, R = S/2, step = (Math.PI*2)/slices.length;
+    cx.clearRect(0,0,S,S);
+    cx.save();
+    cx.translate(R,R);
+    cx.rotate(angle);
+    for(var i=0;i<slices.length;i++){
+      var a0 = i*step - Math.PI/2 - step/2;
+      cx.beginPath();
+      cx.moveTo(0,0);
+      cx.arc(0,0,R-6,a0,a0+step);
+      cx.closePath();
+      cx.fillStyle = sliceColors[i % sliceColors.length];
+      cx.fill();
+      cx.strokeStyle = "rgba(255,255,255,.85)";
+      cx.lineWidth = 4;
+      cx.stroke();
+
+      cx.save();
+      cx.rotate(a0 + step/2);
+      cx.textAlign = "right";
+      cx.textBaseline = "middle";
+      cx.fillStyle = "#40202F";
+      cx.font = "600 30px 'Baloo 2', system-ui, sans-serif";
+      cx.fillText(slices[i], R-32, 0);
+      cx.restore();
+    }
+    cx.restore();
+  }
+
+  function spin(){
+    if(spinning) return;
+    spinning = true;
+    $("spin").disabled = true;
+    $("verdict").textContent = "";
+    var step = (Math.PI*2)/slices.length;
+    var pick = Math.floor(Math.random()*slices.length);
+    var target = (Math.PI*2)*(reduce ? 1 : 5) + (Math.PI*2 - pick*step);
+    var from = angle % (Math.PI*2);
+    var to = from + target;
+    var dur = reduce ? 400 : 3600;
+    var t0 = performance.now();
+
+    function frame(now){
+      var p = Math.min((now - t0)/dur, 1);
+      var eased = 1 - Math.pow(1-p, 4);
+      angle = from + (to - from)*eased;
+      drawWheel();
+      if(p < 1){ requestAnimationFrame(frame); }
+      else{
+        spinning = false;
+        $("spin").disabled = false;
+        var chosen = ACTS[pick];
+        state.act = chosen.t;
+        renderOpts("acts", ACTS, "act");
+        sync();
+        $("verdict").textContent = "Takdir bilang: " + chosen.e + " " + chosen.t + "!";
+        announce("Roda memilih " + chosen.t);
+        burst(24);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  $("spin").addEventListener("click", spin);
+
+  /* ---------------- confetti ---------------- */
+  var conf = $("confetti"), ccx = conf.getContext("2d"), parts = [], raf = null;
+  function sizeConf(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    conf.width = Math.floor(innerWidth*dpr);
+    conf.height = Math.floor(innerHeight*dpr);
+    ccx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  sizeConf();
+  window.addEventListener("resize", sizeConf);
+
+  var CONF_COLORS = ["#FF6F9C","#FFD166","#54CBAE","#9B7BD8","#FF9AC0","#8FD0F5"];
+  function burst(n){
+    if(reduce) return;
+    for(var i=0;i<n;i++){
+      parts.push({
+        x: innerWidth/2 + (Math.random()-.5)*innerWidth*0.6,
+        y: innerHeight*0.35 + (Math.random()-.5)*80,
+        vx:(Math.random()-.5)*7,
+        vy:-(Math.random()*8+3),
+        w: 6+Math.random()*7,
+        h: 8+Math.random()*8,
+        r: Math.random()*Math.PI,
+        vr:(Math.random()-.5)*0.3,
+        c: CONF_COLORS[Math.floor(Math.random()*CONF_COLORS.length)],
+        life: 120+Math.random()*60
+      });
+    }
+    if(!raf) raf = requestAnimationFrame(tick);
+  }
+  function tick(){
+    ccx.clearRect(0,0,innerWidth,innerHeight);
+    for(var i=parts.length-1;i>=0;i--){
+      var p = parts[i];
+      p.vy += 0.24; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life--;
+      if(p.life <= 0 || p.y > innerHeight+40){ parts.splice(i,1); continue; }
+      ccx.save();
+      ccx.translate(p.x, p.y);
+      ccx.rotate(p.r);
+      ccx.fillStyle = p.c;
+      ccx.globalAlpha = Math.max(0, Math.min(1, p.life/60));
+      ccx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ccx.restore();
+    }
+    if(parts.length){ raf = requestAnimationFrame(tick); }
+    else{ ccx.clearRect(0,0,innerWidth,innerHeight); raf = null; }
+  }
+
+  /* ---------------- boot ---------------- */
+
+  function boot(){
+    closeInvite();
+    var m = location.hash.match(/^#u=([A-Za-z0-9_-]+)$/);
+    if(m){
+      var p = null;
+      try{ p = dec(m[1]); }catch(e){ p = null; }
+      if(p && typeof p === "object"){
+        fromPayload(p);
+        showViewer();
+        return;
+      }
+    }
+    showPicker();
+  }
+  window.addEventListener("hashchange", boot);
+
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(drawWheel); }
+  boot();
+})();
+</script>
+</body>
+</html>
